@@ -8,3 +8,11 @@
 #root {
     font-family: 'Lexend Deca', sans-serif;
 }
+main {
+    width: 100vw;
+    height: 100vh;
+    margin: 70px 0;
+    background-color: #F2F2F2;
+    overflow-y: scroll;
+    padding: 22px 18px;
+}

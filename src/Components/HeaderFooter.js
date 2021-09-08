@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 
-export default function HeaderContentFooter () {
+export default function HeaderFooter () {
 
     const percentage = 66;
 
@@ -13,10 +13,6 @@ export default function HeaderContentFooter () {
                 <$TrackItLogoTitle>TrackIt</$TrackItLogoTitle>
                 <$ProfilePictureContainer />
             </$Navbar>
-
-            <$ContentContainer>
-
-            </$ContentContainer>
 
             <$BottomBar>
                 <Link to="" className="to-habits-history-link">Hábitos</Link>
@@ -52,7 +48,6 @@ const $Navbar = styled.div`
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 2;
 `
 const $TrackItLogoTitle = styled.span`
     font-family: 'Playball', cursive;
@@ -67,11 +62,6 @@ const $ProfilePictureContainer = styled.div`
     background-image: url("./images/trackit-logo.png");
     background-size: 100%;
 `
-const $ContentContainer = styled.div`
-    width: 100vw;
-    height: 100vh;
-    background-color: #F2F2F2;
-`
 const $BottomBar = styled.div`
     background-color: #ffffff;
     height: 70px;
@@ -82,7 +72,6 @@ const $BottomBar = styled.div`
     position: fixed;
     bottom: 0;
     left: 0;
-    z-index: 2;
     padding: 0 36px;
 
     .to-habits-history-link {
