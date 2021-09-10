@@ -1,18 +1,47 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { sendLogin } from "../API";
+import { useHistory } from "react-router-dom";
+import { useState } from "react";
 
 export default function Login () {
+
+    const history = useHistory();
+
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [loading, setLoading] = useState(false);
+
+    const login = () => {
+
+        const body = {
+            email,
+            password
+        }
+        console.log(body)
+
+        sendLogin(body)
+        .then(res => {
+            console.log(res.data);
+            history.push("/today")
+        }).catch(err => {
+            console.log(err);
+            setLoading(false);
+            alert("Seu login não foi efetuado! Por favor, tente novamente.")
+        })
+
+        setLoading(true);
+    }
+
     return (
         <$InicializationContainer>
             <$TrackItLogo src="./images/trackit-logo.png" alt=""/>
             <$InputsAndButtonContainer>
-                <$InicializationInput placeholder="email"></$InicializationInput>
-                <$InicializationInput placeholder="senha"></$InicializationInput>
-                <$InicializationInput placeholder="nome"></$InicializationInput>
-                <$InicializationInput placeholder="foto"></$InicializationInput>
-                <Link to="" className="inicialization-link">Entrar</Link>
+                <$InicializationInput loading={loading} placeholder="email" value={email} onChange={e => setEmail(e.target.value)}/>
+                <$InicializationInput loading={loading} type="password" placeholder="senha" value={password} onChange={e => setPassword(e.target.value)}/>
+                <MainButton loading={loading} onClick={login}>Entrar</MainButton>
             </$InputsAndButtonContainer>
-            <Link to="" className="register-or-Login-link">Não tem uma conta? Cadastre-se!</Link>
+            <Link to="/registration" className="register-or-Login-link">Não tem uma conta? Cadastre-se!</Link>
         </$InicializationContainer>
     )
 }
@@ -39,19 +68,6 @@ const $InputsAndButtonContainer = styled.div`
     flex-direction: column;
     gap: 6px;
     margin-top: 45px;
-
-    .inicialization-link {
-        width: 303px;
-        height: 45px;
-        background-color: #52B6FF;
-        border-radius: 5px;
-        font-size: 21px;
-        color: #ffffff;
-        text-decoration: none;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
 `
 const $InicializationInput = styled.input`
     width: 303px;
@@ -60,9 +76,28 @@ const $InicializationInput = styled.input`
     border: 1px solid #D5D5D5;
     border-radius: 5px;
     padding-left: 11px;
+    font-size: 20px;
+    pointer-events: ${props => props.loading ? "none" : "auto"};
+    background-color: ${props => props.loading ? "#F2F2F2" : "#ffffff"};
+    opacity: ${props => props.loading ? "0.5" : "1"};
 
     ::placeholder {
         font-size: 20px;
         color: #DBDBDB;
     }
+`
+const MainButton = styled.button`
+    width: 303px;
+    height: 45px;
+    background-color: #52B6FF;
+    border-radius: 5px;
+    font-size: 21px;
+    color: #ffffff;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    pointer-events: ${props => props.loading ? "none" : "auto"};
+    opacity: ${props => props.loading ? "0.5" : "1"};
 `

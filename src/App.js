@@ -11,7 +11,6 @@ import Registration from "./Components/Registration";
 import Habits from "./Components/Habits";
 import Today from "./Components/Today";
 import History from "./Components/History";
-import Loading from "./Components/Loading";
 
 export default function App () {
 

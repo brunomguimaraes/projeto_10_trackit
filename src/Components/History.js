@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import HeaderFooter from "./HeaderFooter";
-import { IoCheckmarkSharp } from "react-icons/io5"
 
 export default function History () {
     return (
