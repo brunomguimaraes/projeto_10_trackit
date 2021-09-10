@@ -11,7 +11,7 @@ import Registration from "./Components/Registration";
 import Habits from "./Components/Habits";
 import Today from "./Components/Today";
 import History from "./Components/History";
-import HeaderFooter from "./Components/HeaderFooter";
+import Loading from "./Components/Loading";
 
 export default function App () {
 
@@ -28,18 +28,14 @@ export default function App () {
                       <Registration />
                     </Route>
                     <Route exact path="/habits">
-                      <HeaderFooter />
                       <Habits />
                     </Route>
                     <Route exact path="/today">
-                      <HeaderFooter />
                       <Today />
                     </Route>
                     <Route exact path="/history">
-                      <HeaderFooter />
                       <History />
                     </Route>
-
 
                 </Switch>
 

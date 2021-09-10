@@ -11,6 +11,7 @@ export default function HeaderFooter () {
         <>
             <$Navbar>
                 <$TrackItLogoTitle>TrackIt</$TrackItLogoTitle>
+                <$UserName>Pedro Mafra</$UserName>
                 <$ProfilePictureContainer />
             </$Navbar>
 
@@ -53,6 +54,16 @@ const $TrackItLogoTitle = styled.span`
     font-family: 'Playball', cursive;
     color: #ffffff;
     font-size: 39px;
+`
+const $UserName = styled.span`
+    width: 120px;
+    height: 50px;
+    margin-left: 40px;
+    font-size: 16px;
+    color: #ffffff;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
 `
 const $ProfilePictureContainer = styled.div`
     background-color: cyan;
