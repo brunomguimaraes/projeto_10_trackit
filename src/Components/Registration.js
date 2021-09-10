@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { sendRegistration } from "../API";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
+import Loader from "react-loader-spinner";
 
 export default function Login () {
 
@@ -49,7 +50,7 @@ export default function Login () {
                 <$InicializationInput loading={loading} type="password" placeholder="senha" value={password} onChange={e => setPassword(e.target.value)} />
                 <$InicializationInput loading={loading} placeholder="nome" value={name} onChange={e => setName(e.target.value)} />
                 <$InicializationInput loading={loading} placeholder="foto" value={image} onChange={e => setImage(e.target.value)} />
-                <MainButton loading={loading} onClick={register}>Cadastrar</MainButton>
+                <MainButton loading={loading} onClick={register}>{loading ? (<Loader type="ThreeDots" color="#ffffff" width={51} height={51}/>) : "Cadastrar"}</MainButton>
             </$InputsAndButtonContainer>
             <Link to="/" className="register-or-Login-link">Já tem uma conta? Faça login!</Link>
         </$InicializationContainer>
@@ -111,3 +112,4 @@ const MainButton = styled.button`
     pointer-events: ${props => props.loading ? "none" : "auto"};
     opacity: ${props => props.loading ? "0.5" : "1"};
 `
+

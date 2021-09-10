@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { sendLogin } from "../API";
 import { useHistory } from "react-router-dom";
 import { useState } from "react";
+import Loader from "react-loader-spinner";
 
 export default function Login () {
 
@@ -39,7 +40,7 @@ export default function Login () {
             <$InputsAndButtonContainer>
                 <$InicializationInput loading={loading} placeholder="email" value={email} onChange={e => setEmail(e.target.value)}/>
                 <$InicializationInput loading={loading} type="password" placeholder="senha" value={password} onChange={e => setPassword(e.target.value)}/>
-                <MainButton loading={loading} onClick={login}>Entrar</MainButton>
+                <MainButton loading={loading} onClick={login}>{loading ? (<Loader type="ThreeDots" color="#ffffff" width={51} height={51}/>) : "Entrar"}</MainButton>
             </$InputsAndButtonContainer>
             <Link to="/registration" className="register-or-Login-link">Não tem uma conta? Cadastre-se!</Link>
         </$InicializationContainer>
