@@ -8,25 +8,25 @@ export default function History () {
         <>
             <HeaderFooter />
             <main>
-                <$HistoryTitle>
+                <HistoryTitle>
                     Histórico
-                </$HistoryTitle>
+                </HistoryTitle>
 
-                <$SoonMessage>
+                <SoonMessage>
                     Em breve você poderá ver o histórico dos seus hábitos aqui!
-                </$SoonMessage>
+                </SoonMessage>
 
             </main>
         </>
     )
 }
 
-const $HistoryTitle = styled.h1`
+const HistoryTitle = styled.h1`
     color: #126BA5;
     font-size: 23px;
     margin-bottom: 17px;
 `
-const $SoonMessage = styled.p`
+const SoonMessage = styled.p`
     line-height: 22px;
     color: #666666;
     font-size: 18px;

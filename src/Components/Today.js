@@ -11,33 +11,33 @@ export default function Today () {
             <HeaderFooter />
             <main>            
                 <div>
-                    <$WeekDay>
+                    <WeekDay>
                         Segunda, 17/05
-                    </$WeekDay>
-                    <$HabitsConcludedQty>
+                    </WeekDay>
+                    <HabitsConcludedQty>
                         Nenhum hábito concluído ainda
-                    </$HabitsConcludedQty>
+                    </HabitsConcludedQty>
                 </div>
 
-                <$TodayCardsList>
+                <TodayCardsList>
                 
-                    <$TodayCard>
+                    <TodayCard>
 
-                        <$TodayTaskContent>
-                            <$Task>
+                        <TodayTaskContent>
+                            <Task>
                                 Ler 1 capítulo de livro
-                            </$Task>
-                            <$Sequence>Sequência atual: 3 dias</$Sequence>
-                            <$Record>Seu recorde: 5 dias</$Record>                
-                        </$TodayTaskContent>
+                            </Task>
+                            <Sequence>Sequência atual: 3 dias</Sequence>
+                            <Record>Seu recorde: 5 dias</Record>                
+                        </TodayTaskContent>
 
-                        <$CheckButton>
+                        <CheckButton>
                             <IoCheckmarkSharp className="check-mark" />
-                        </$CheckButton>
+                        </CheckButton>
 
-                    </$TodayCard>
+                    </TodayCard>
                 
-                </$TodayCardsList>
+                </TodayCardsList>
 
 
             </main>
@@ -46,50 +46,50 @@ export default function Today () {
 
 }
 
-const $WeekDay = styled.h1`
+const WeekDay = styled.h1`
     font-size: 23px;
     color: #126BA5;
     line-height: 29px;
 `
-const $HabitsConcludedQty = styled.h2`
+const HabitsConcludedQty = styled.h2`
     font-size: 18px;
     color: #BABABA;
     line-height: 23px;
 `
-const $TodayCardsList = styled.ul`
+const TodayCardsList = styled.ul`
     display: flex;
     flex-direction: column;
     margin: 28px 0;
     gap: 10px;
 `
-const $TodayCard = styled.li`
+const TodayCard = styled.li`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     padding: 13px;
     background-color: #ffffff;
 `
-const $TodayTaskContent = styled.div`
+const TodayTaskContent = styled.div`
     display: flex;
     flex-direction: column;
 `
-const $Task = styled.h1`
+const Task = styled.h1`
     font-size: 20px;
     line-height: 25px;
     color: #666666;
     margin-bottom: 7px;
 `
-const $Sequence = styled.span`
+const Sequence = styled.span`
     font-size: 13px;
     line-height: 16px;
     color: #666666;
 `
-const $Record = styled.span`
+const Record = styled.span`
     font-size: 13px;
     line-height: 16px;
     color: #666666;
 `
-const $CheckButton = styled.button`
+const CheckButton = styled.button`
     background-color: #EBEBEB;
     width: 69px;
     height: 69px;

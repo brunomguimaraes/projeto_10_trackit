@@ -2,22 +2,25 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
+import { useContext } from 'react';
+import UserContext from './UserContext';
 
 export default function HeaderFooter () {
 
     const percentage = 66;
+    const loginInfo = useContext(UserContext);
 
     return (
         <>
-            <$Navbar>
-                <$TrackItLogoTitle>TrackIt</$TrackItLogoTitle>
-                <$UserName>Pedro Mafra</$UserName>
-                <$ProfilePictureContainer />
-            </$Navbar>
+            <Navbar>
+                <TrackItLogoTitle>TrackIt</TrackItLogoTitle>
+                <UserName>{loginInfo.name}</UserName>
+                <ProfilePictureContainer loginInfo={loginInfo}/>
+            </Navbar>
 
-            <$BottomBar>
-                <Link to="" className="to-habits-history-link">Hábitos</Link>
-                <Link to="">
+            <BottomBar>
+                <Link to="/habits" className="to-habits-history-link">Hábitos</Link>
+                <Link to="/today">
                     <CircularProgressbar 
                         className="circular-bar" 
                         value={percentage} text="Hoje" 
@@ -31,13 +34,13 @@ export default function HeaderFooter () {
                         backgroundPadding={6}>
                     </CircularProgressbar>
                 </Link>
-                <Link to="" className="to-habits-history-link">Histórico</Link>
-            </$BottomBar>
+                <Link to="/history" className="to-habits-history-link">Histórico</Link>
+            </BottomBar>
         </>
     )
 }
 
-const $Navbar = styled.div`
+const Navbar = styled.div`
     background-color: #126BA5;
     height: 70px;
     width: 100%;
@@ -50,12 +53,12 @@ const $Navbar = styled.div`
     top: 0;
     left: 0;
 `
-const $TrackItLogoTitle = styled.span`
+const TrackItLogoTitle = styled.span`
     font-family: 'Playball', cursive;
     color: #ffffff;
     font-size: 39px;
 `
-const $UserName = styled.span`
+const UserName = styled.span`
     width: 120px;
     height: 50px;
     margin-left: 40px;
@@ -65,15 +68,15 @@ const $UserName = styled.span`
     display: flex;
     align-items: center;
 `
-const $ProfilePictureContainer = styled.div`
+const ProfilePictureContainer = styled.div`
     background-color: cyan;
     height: 51px;
     width: 51px;
     border-radius: 98px;
-    background-image: url("./images/trackit-logo.png");
+    background-image: url(${props => props.loginInfo !== undefined ? props.loginInfo.image : ""});
     background-size: 100%;
 `
-const $BottomBar = styled.div`
+const BottomBar = styled.div`
     background-color: #ffffff;
     height: 70px;
     width: 100%;

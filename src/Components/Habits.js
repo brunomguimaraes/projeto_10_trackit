@@ -2,170 +2,140 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import HeaderFooter from "./HeaderFooter";
 import { IoTrashOutline } from "react-icons/io5"
-
+import { useEffect, useContext, useState } from "react";
+import { getHabits, sendNewHabit, deleteHabit } from "../API";
+import UserContext from './UserContext';
 
 export default function Habits () {
+
+    const loginInfo = useContext(UserContext);
+    const [habits, setHabits] = useState([]);
+    const [newHabitName, setNewHabitName] = useState("");
+    const [newHabitDays, setNewHabitDays] = useState([]);
+    const config = {
+        headers: {
+            Authorization: `Bearer ${loginInfo.token}`
+        }
+    }
+    console.log(newHabitDays);
+    console.log(config);
+
+    useEffect(() => {
+
+        getHabits(config).then(res => {
+            setHabits(res.data);
+            console.log(res.data);
+        })
+
+    },[])
+
+    const createNewHabit = () => {
+        const body = {
+            name: newHabitName,
+            days: newHabitDays
+        }
+        sendNewHabit(body, config).then(res => {
+            setHabits([...habits, res.data])
+            setNewHabitName("");
+            setNewHabitDays([]);
+        })
+    }
+
+    const toggleNewDay = (e) => {
+        if (newHabitDays.includes(Number(e.target.id))) {
+            const removedIdlist = newHabitDays.filter(dayId => 
+                dayId !== Number(e.target.id)
+            )
+            setNewHabitDays(removedIdlist);
+        } else {
+            setNewHabitDays([...newHabitDays, Number(e.target.id)])
+        }
+    }
+
+    const removeHabit = (habitId) => {
+        const deleteOrNot = window.confirm("Você quer mesmo deletar este hábito?");
+        if (deleteOrNot) {
+            deleteHabit(habitId, config).then((res) => {
+                const removedHabitList = habits.filter(habit => 
+                    habit.id !== habitId    
+                )
+                setHabits(removedHabitList);
+                console.log(res.data)
+            })
+        }
+    }
+
+
     return (
         <>
             <HeaderFooter />
             <main>
-
-                <$TopBoxTitle>
-                    <$MyHabitsTitle>
+                <TopBoxTitle>
+                    <MyHabitsTitle>
                         Meus hábitos
-                    </$MyHabitsTitle>
-                    <$AddHabitButton>
+                    </MyHabitsTitle>
+                    <AddHabitButton>
                         +
-                    </$AddHabitButton>
-                </$TopBoxTitle>
+                    </AddHabitButton>
+                </TopBoxTitle>
 
-                <$AddHabitCard>
-                
-                    <$HabitNameInput placeholder="nome do hábito">
-                    </$HabitNameInput>
-
-                    <$WeekDays>
-                        <$WeekDay>S</$WeekDay>
-                        <$WeekDay>T</$WeekDay>
-                        <$WeekDay>Q</$WeekDay>
-                        <$WeekDay>Q</$WeekDay>
-                        <$WeekDay>S</$WeekDay>
-                        <$WeekDay>S</$WeekDay>
-                        <$WeekDay>D</$WeekDay>
-                    </$WeekDays>
-
-                    <$CancelSaveButtons>
-
-                        <$CancelButton>Cancelar</$CancelButton>
-                        <$SaveButton>Salvar</$SaveButton>
-
-                    </$CancelSaveButtons>
-                
-                </$AddHabitCard>
-
-                <$HabitCardsList>
-
-                    <$HabitCard>
-
-                        <$HabitNameAndTrashBinBox>
-                            <$HabitName>Ler 1 capítulo de livro</$HabitName>
-                            <IoTrashOutline className="trash-bin" />
-                        
-                        </$HabitNameAndTrashBinBox>
-
-                        <$WeekDays>
-                            <$WeekDay>S</$WeekDay>
-                            <$WeekDay>T</$WeekDay>
-                            <$WeekDay>Q</$WeekDay>
-                            <$WeekDay>Q</$WeekDay>
-                            <$WeekDay>S</$WeekDay>
-                            <$WeekDay>S</$WeekDay>
-                            <$WeekDay>D</$WeekDay>
-                        </$WeekDays>
-
-                    </$HabitCard>
-
-                    <$HabitCard>
-
-                        <$HabitNameAndTrashBinBox>
-                            <$HabitName>Ler 1 capítulo de livro</$HabitName>
-                            <IoTrashOutline className="trash-bin" />
-                        
-                        </$HabitNameAndTrashBinBox>
-
-                        <$WeekDays>
-                            <$WeekDay>S</$WeekDay>
-                            <$WeekDay>T</$WeekDay>
-                            <$WeekDay>Q</$WeekDay>
-                            <$WeekDay>Q</$WeekDay>
-                            <$WeekDay>S</$WeekDay>
-                            <$WeekDay>S</$WeekDay>
-                            <$WeekDay>D</$WeekDay>
-                        </$WeekDays>
-
-                    </$HabitCard>
-                    <$HabitCard>
-
-                        <$HabitNameAndTrashBinBox>
-                            <$HabitName>Ler 1 capítulo de livro</$HabitName>
-                            <IoTrashOutline className="trash-bin" />
-                        
-                        </$HabitNameAndTrashBinBox>
-
-                        <$WeekDays>
-                            <$WeekDay>S</$WeekDay>
-                            <$WeekDay>T</$WeekDay>
-                            <$WeekDay>Q</$WeekDay>
-                            <$WeekDay>Q</$WeekDay>
-                            <$WeekDay>S</$WeekDay>
-                            <$WeekDay>S</$WeekDay>
-                            <$WeekDay>D</$WeekDay>
-                        </$WeekDays>
-
-                    </$HabitCard>
-                    <$HabitCard>
-
-                        <$HabitNameAndTrashBinBox>
-                            <$HabitName>Ler 1 capítulo de livro</$HabitName>
-                            <IoTrashOutline className="trash-bin" />
-                        
-                        </$HabitNameAndTrashBinBox>
-
-                        <$WeekDays>
-                            <$WeekDay>S</$WeekDay>
-                            <$WeekDay>T</$WeekDay>
-                            <$WeekDay>Q</$WeekDay>
-                            <$WeekDay>Q</$WeekDay>
-                            <$WeekDay>S</$WeekDay>
-                            <$WeekDay>S</$WeekDay>
-                            <$WeekDay>D</$WeekDay>
-                        </$WeekDays>
-
-                    </$HabitCard>
-                    <$HabitCard>
-
-                        <$HabitNameAndTrashBinBox>
-                            <$HabitName>Ler 1 capítulo de livro</$HabitName>
-                            <IoTrashOutline className="trash-bin" />
-                        
-                        </$HabitNameAndTrashBinBox>
-
-                        <$WeekDays>
-                            <$WeekDay>S</$WeekDay>
-                            <$WeekDay>T</$WeekDay>
-                            <$WeekDay>Q</$WeekDay>
-                            <$WeekDay>Q</$WeekDay>
-                            <$WeekDay>S</$WeekDay>
-                            <$WeekDay>S</$WeekDay>
-                            <$WeekDay>D</$WeekDay>
-                        </$WeekDays>
-
-                    </$HabitCard>
-
-                    </$HabitCardsList>
-
-                <$NotAHabitYet>
-                    Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!
-                </$NotAHabitYet>
-            
-            
-            
-            
+                <HabitCardsList>
+                    {habits.length === 0 ? (
+                        <>
+                            <AddHabitCard>
+                                <HabitNameInput placeholder="nome do hábito" value={newHabitName} onChange={e => setNewHabitName(e.target.value)}/>
+                                <WeekDays>
+                                    <WeekDay id={1} onClick={e => toggleNewDay(e)}>S</WeekDay>
+                                    <WeekDay id={2} onClick={e => toggleNewDay(e)}>T</WeekDay>
+                                    <WeekDay id={3} onClick={e => toggleNewDay(e)}>Q</WeekDay>
+                                    <WeekDay id={4} onClick={e => toggleNewDay(e)}>Q</WeekDay>
+                                    <WeekDay id={5} onClick={e => toggleNewDay(e)}>S</WeekDay>
+                                    <WeekDay id={6} onClick={e => toggleNewDay(e)}>S</WeekDay>
+                                    <WeekDay id={7} onClick={e => toggleNewDay(e)}>D</WeekDay>
+                                </WeekDays>
+                                <CancelSaveButtons>
+                                    <CancelButton>Cancelar</CancelButton>
+                                    <SaveButton onClick={createNewHabit}>Salvar</SaveButton>
+                                </CancelSaveButtons>
+                            </AddHabitCard>
+                            <NotAHabitYet>
+                                Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!
+                            </NotAHabitYet>
+                        </>
+                    ) : (
+                        habits.map((habit, i) => 
+                            <HabitCard id={habit.id} key={i}>
+                                <HabitNameAndTrashBinBox>
+                                    <HabitName>{habit.name}</HabitName>
+                                    <IoTrashOutline className="trash-bin" onClick={() => removeHabit(habit.id)}/>
+                                </HabitNameAndTrashBinBox>
+                                <WeekDays>
+                                    <WeekDay>S</WeekDay>
+                                    <WeekDay>T</WeekDay>
+                                    <WeekDay>Q</WeekDay>
+                                    <WeekDay>Q</WeekDay>
+                                    <WeekDay>S</WeekDay>
+                                    <WeekDay>S</WeekDay>
+                                    <WeekDay>D</WeekDay>
+                                </WeekDays>
+                            </HabitCard>)
+                    )}
+                </HabitCardsList>
             </main>
         </>
     )
 }
 
-const $TopBoxTitle = styled.div`
+const TopBoxTitle = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
 `
-const $MyHabitsTitle = styled.span`
+const MyHabitsTitle = styled.span`
     color: #126BA5;
     font-size: 23px;
 `
-const $AddHabitButton = styled.button`
+const AddHabitButton = styled.button`
     width: 40px;
     height: 35px;
     background-color: #52B6FF;
@@ -175,7 +145,7 @@ const $AddHabitButton = styled.button`
     color: #ffffff;
     font-weight: bold;
 `
-const $AddHabitCard = styled.div`
+const AddHabitCard = styled.div`
     height: 180px;
     background-color: #ffffff;
     padding: 18px;
@@ -184,7 +154,7 @@ const $AddHabitCard = styled.div`
     border-radius: 5px;
     margin-top: 20px;
 `
-const $HabitNameInput = styled.input`
+const HabitNameInput = styled.input`
     height: 45px;
     outline: none;
     border: 1px solid #D5D5D5;
@@ -197,13 +167,13 @@ const $HabitNameInput = styled.input`
         color: #DBDBDB;
     }
 `
-const $WeekDays = styled.div`
+const WeekDays = styled.div`
     display: flex;
     flex-direction: row;
     gap: 4px;
     margin-top: 8px;
 `
-const $WeekDay = styled.button`
+const WeekDay = styled.button`
     background-color: #ffffff;
     width: 30px;
     height: 30px;
@@ -212,11 +182,11 @@ const $WeekDay = styled.button`
     color: #D5D5D5;
     font-size: 20px;
 `
-const $CancelSaveButtons = styled.div`
+const CancelSaveButtons = styled.div`
     margin-top: 29px;
     text-align: right;
 `
-const $CancelButton = styled.button`
+const CancelButton = styled.button`
     background-color: #ffffff;
     width: 84px;
     height: 35px;
@@ -226,7 +196,7 @@ const $CancelButton = styled.button`
     color: #52B6FF;
     margin-right: 16px;
 `
-const $SaveButton = styled.button`
+const SaveButton = styled.button`
     background-color: #52B6FF;
     width: 84px;
     height: 35px;
@@ -235,20 +205,20 @@ const $SaveButton = styled.button`
     font-size: 16px;
     color: #ffffff;
 `
-const $HabitCardsList = styled.ul`
+const HabitCardsList = styled.ul`
     display: flex;
     flex-direction: column;
     gap: 10px;
     margin: 20px 0;
 `
-const $HabitCard = styled.li`
+const HabitCard = styled.li`
     display: flex;
     flex-direction: column;
     padding: 14px;
     background-color: #ffffff;
     border-radius: 5px;
 `
-const $HabitNameAndTrashBinBox = styled.div`
+const HabitNameAndTrashBinBox = styled.div`
     display: flex;
     justify-content: space-between;
 
@@ -257,12 +227,12 @@ const $HabitNameAndTrashBinBox = styled.div`
         color: #666666;
     }
 `
-const $HabitName = styled.h1`
+const HabitName = styled.h1`
     font-size: 20px;
     color: #666666;
     line-height: 25px;
 `
-const $NotAHabitYet = styled.p`
+const NotAHabitYet = styled.p`
     font-size: 18px;
     color: #666666;
     line-height: 22px;

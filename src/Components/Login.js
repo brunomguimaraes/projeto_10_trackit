@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import { useState } from "react";
 import Loader from "react-loader-spinner";
 
-export default function Login () {
+export default function Login ({ getUserInfo }) {
 
     const history = useHistory();
 
@@ -23,8 +23,11 @@ export default function Login () {
 
         sendLogin(body)
         .then(res => {
+            getUserInfo(res.data);
+
+            history.push("/today");
             console.log(res.data);
-            history.push("/today")
+            
         }).catch(err => {
             console.log(err);
             setLoading(false);
@@ -35,19 +38,19 @@ export default function Login () {
     }
 
     return (
-        <$InicializationContainer>
-            <$TrackItLogo src="./images/trackit-logo.png" alt=""/>
-            <$InputsAndButtonContainer>
-                <$InicializationInput loading={loading} placeholder="email" value={email} onChange={e => setEmail(e.target.value)}/>
-                <$InicializationInput loading={loading} type="password" placeholder="senha" value={password} onChange={e => setPassword(e.target.value)}/>
+        <InicializationContainer>
+            <TrackItLogo src="./images/trackit-logo.png" alt=""/>
+            <InputsAndButtonContainer>
+                <InicializationInput loading={loading} placeholder="email" value={email} onChange={e => setEmail(e.target.value)}/>
+                <InicializationInput loading={loading} type="password" placeholder="senha" value={password} onChange={e => setPassword(e.target.value)}/>
                 <MainButton loading={loading} onClick={login}>{loading ? (<Loader type="ThreeDots" color="#ffffff" width={51} height={51}/>) : "Entrar"}</MainButton>
-            </$InputsAndButtonContainer>
+            </InputsAndButtonContainer>
             <Link to="/registration" className="register-or-Login-link">Não tem uma conta? Cadastre-se!</Link>
-        </$InicializationContainer>
+        </InicializationContainer>
     )
 }
 
-const $InicializationContainer = styled.div`
+const InicializationContainer = styled.div`
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -60,17 +63,17 @@ const $InicializationContainer = styled.div`
         margin-top: 25px;
     }
 `
-const $TrackItLogo = styled.img`
+const TrackItLogo = styled.img`
     width: 180px;
     margin-top: 68px;
 `
-const $InputsAndButtonContainer = styled.div`
+const InputsAndButtonContainer = styled.div`
     display: flex;
     flex-direction: column;
     gap: 6px;
     margin-top: 45px;
 `
-const $InicializationInput = styled.input`
+const InicializationInput = styled.input`
     width: 303px;
     height: 45px;
     outline: none;

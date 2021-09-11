@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./css/reset.css";
 import "./css/style.css";
 import {
@@ -11,8 +11,17 @@ import Registration from "./Components/Registration";
 import Habits from "./Components/Habits";
 import Today from "./Components/Today";
 import History from "./Components/History";
+import UserContext from './Components/UserContext';
 
 export default function App () {
+
+  const [loginInfo, setLoginInfo] = useState(null);
+
+  const getUserInfo = (userInfo) => {
+    setLoginInfo(userInfo);
+  }
+
+  console.log(loginInfo);
 
     return (
         <>
@@ -20,12 +29,15 @@ export default function App () {
 
                 <Switch>
 
-                    <Route exact path="/">
-                      <Login />
+                    <Route exact path="/" >
+                      <Login getUserInfo={getUserInfo}/>
                     </Route>
                     <Route exact path="/registration">
                       <Registration />
                     </Route>
+
+                  <UserContext.Provider value={loginInfo}>
+
                     <Route exact path="/habits">
                       <Habits />
                     </Route>
@@ -35,6 +47,8 @@ export default function App () {
                     <Route exact path="/history">
                       <History />
                     </Route>
+
+                  </UserContext.Provider>
 
                 </Switch>
 
