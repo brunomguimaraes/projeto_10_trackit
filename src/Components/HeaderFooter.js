@@ -67,6 +67,7 @@ const UserName = styled.span`
     overflow: hidden;
     display: flex;
     align-items: center;
+    justify-content: flex-end;
 `
 const ProfilePictureContainer = styled.div`
     background-color: cyan;
