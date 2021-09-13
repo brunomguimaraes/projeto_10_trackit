@@ -1,9 +1,8 @@
 import styled from "styled-components";
-import HeaderFooter from "./HeaderFooter";
+import HeaderFooter from "../HeaderFooter";
 
 export default function History () {
     return (
-
         <>
             <HeaderFooter />
             <main>
@@ -14,7 +13,6 @@ export default function History () {
                 <SoonMessage>
                     Em breve você poderá ver o histórico dos seus hábitos aqui!
                 </SoonMessage>
-
             </main>
         </>
     )

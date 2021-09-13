@@ -1,15 +1,16 @@
-import styled from "styled-components";
-import HeaderFooter from "./HeaderFooter";
+import HeaderFooter from "../HeaderFooter";
 import { IoTrashOutline } from "react-icons/io5"
 import { useEffect, useContext, useState } from "react";
-import { getHabits, sendNewHabit, deleteHabit } from "../API";
-import UserContext from './UserContext';
+import { getHabits, sendNewHabit, deleteHabit } from "../../API";
+import UserContext from '../../Contexts/UserContext';
 import Loader from "react-loader-spinner";
+import Loading from "../Loading";
+import { TopBoxTitle, MyHabitsTitle, AddHabitButton, AddHabitCard, HabitNameInput, WeekDays, WeekDay, CancelSaveButtons, CancelButton, SaveButton, HabitCardsList, HabitCard, HabitNameAndTrashBinBox, HabitName, NotAHabitYet } from "./HabitsStyled";
 
 export default function Habits () {
 
     const loginInfo = useContext(UserContext);
-    const [habits, setHabits] = useState([]);
+    const [habits, setHabits] = useState(null);
     const [newHabitName, setNewHabitName] = useState("");
     const [newHabitDays, setNewHabitDays] = useState([]);
     const [clicked, setClicked] = useState(false);
@@ -24,8 +25,21 @@ export default function Habits () {
     useEffect(() => {
         getHabits(config).then(res => {
             setHabits(res.data);
+        }).catch(err => {
+            alert("Não foi possível carregar os hábitos do servidor!");
         })
     },[])
+
+    if (habits === null) {
+        return (
+            <>
+                <HeaderFooter />
+                <main>
+                    <Loading />
+                </main>
+            </>
+        )
+    }
 
     const createNewHabit = () => {
         const body = {
@@ -88,7 +102,7 @@ export default function Habits () {
                                 <HabitNameInput placeholder="nome do hábito" value={newHabitName} onChange={e => setNewHabitName(e.target.value)} loading={loading}/>
                                 <WeekDays loading={loading}>
                                     {weekdays.map((weekday, i) =>                                     
-                                        <WeekDay id={i} onClick={e => toggleNewDay(e)} className={newHabitDays.includes(i) ? "selected" : ""}>{weekday}</WeekDay>
+                                        <WeekDay key={i} id={i} onClick={e => toggleNewDay(e)} className={newHabitDays.includes(i) ? "selected" : ""}>{weekday}</WeekDay>
                                     )}
                                 </WeekDays>
                                 <CancelSaveButtons loading={loading}>
@@ -103,7 +117,7 @@ export default function Habits () {
                                 Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!
                             </NotAHabitYet>
                     ) : (<></>)}
-                    {habits.length !== 0 ? (    
+                    {habits.length !== 0 ? (
                         <HabitCardsList>
                             {habits.map((habit, i) => 
                             <HabitCard id={habit.id} key={i}>
@@ -113,7 +127,7 @@ export default function Habits () {
                                 </HabitNameAndTrashBinBox>
                                 <WeekDays>
                                     {weekdays.map((weekday, i) => 
-                                        <WeekDay id={i} className={habit.days.includes(i) ? "selected" : ""}>{weekday}</WeekDay>
+                                        <WeekDay key={i} id={i} className={habit.days.includes(i) ? "selected" : ""}>{weekday}</WeekDay>
                                     )}
                                 </WeekDays>
                             </HabitCard>)}
@@ -123,130 +137,3 @@ export default function Habits () {
         </>
     )
 }
-
-const TopBoxTitle = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-`
-const MyHabitsTitle = styled.span`
-    color: #126BA5;
-    font-size: 23px;
-`
-const AddHabitButton = styled.button`
-    width: 40px;
-    height: 35px;
-    background-color: #52B6FF;
-    border: none;
-    border-radius: 4.5px;
-    font-size: 27px;
-    color: #ffffff;
-    font-weight: bold;
-`
-const AddHabitCard = styled.div`
-    height: 180px;
-    background-color: #ffffff;
-    padding: 18px;
-    display: flex;
-    flex-direction: column;
-    border-radius: 5px;
-    margin-top: 20px;
-    pointer-events: ${props => props.loading ? "none" : "auto"};
-`
-const HabitNameInput = styled.input`
-    height: 45px;
-    outline: none;
-    border: 1px solid #D5D5D5;
-    border-radius: 5px;
-    padding-left: 11px;
-    font-size: 20px;
-    opacity: ${props => props.loading ? "0.5" : "1"};
-    background-color: ${props => props.loading ? "#F2F2F2" : "#ffffff"};
-
-    ::placeholder {
-        font-size: 20px;
-        color: ${props => props.loading ? "#B3B3B3" : "#DBDBDB"};
-    }
-`
-const WeekDays = styled.div`
-    display: flex;
-    flex-direction: row;
-    gap: 4px;
-    margin-top: 8px;
-    opacity: ${props => props.loading ? "0.5" : "1"};
-
-    .selected {
-        background-color: #CFCFCF;
-        color: #ffffff;
-    }
-`
-const WeekDay = styled.button`
-    background-color: #ffffff;
-    width: 30px;
-    height: 30px;
-    border: 1px solid #D5D5D5;
-    border-radius: 5px;
-    color: #D5D5D5;
-    font-size: 20px;
-`
-const CancelSaveButtons = styled.div`
-    margin-top: 29px;
-    display: flex;
-    justify-content: flex-end;
-    opacity: ${props => props.loading ? "0.5" : "1"};
-`
-const CancelButton = styled.button`
-    background-color: #ffffff;
-    width: 84px;
-    height: 35px;
-    border-radius: 5px;
-    border: none;
-    font-size: 16px;
-    color: #52B6FF;
-    margin-right: 16px;
-`
-const SaveButton = styled.button`
-    background-color: #52B6FF;
-    width: 84px;
-    height: 35px;
-    border-radius: 5px;
-    border: none;
-    font-size: 16px;
-    color: #ffffff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-`
-const HabitCardsList = styled.ul`
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin: 20px 0;
-`
-const HabitCard = styled.li`
-    display: flex;
-    flex-direction: column;
-    padding: 14px;
-    background-color: #ffffff;
-    border-radius: 5px;
-`
-const HabitNameAndTrashBinBox = styled.div`
-    display: flex;
-    justify-content: space-between;
-
-    .trash-bin {
-        font-size: 20px;
-        color: #666666;
-    }
-`
-const HabitName = styled.h1`
-    font-size: 20px;
-    color: #666666;
-    line-height: 25px;
-`
-const NotAHabitYet = styled.p`
-    font-size: 18px;
-    color: #666666;
-    line-height: 22px;
-    margin: 30px 0;
-`

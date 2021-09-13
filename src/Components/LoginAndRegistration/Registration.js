@@ -1,6 +1,5 @@
-import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { sendRegistration } from "../API";
+import { sendRegistration } from "../../API";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import Loader from "react-loader-spinner";

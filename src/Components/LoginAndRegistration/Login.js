@@ -1,6 +1,5 @@
-import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { sendLogin } from "../API";
+import { sendLogin } from "../../API";
 import { useHistory } from "react-router-dom";
 import { useState } from "react";
 import Loader from "react-loader-spinner";

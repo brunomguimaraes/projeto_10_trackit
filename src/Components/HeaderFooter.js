@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { useContext } from 'react';
-import UserContext from './UserContext';
-import DoneHabitsContext from "./DoneHabitsContext";
+import UserContext from '../Contexts/UserContext';
+import DoneHabitsContext from "../Contexts/DoneHabitsContext";
 
 export default function HeaderFooter () {
 

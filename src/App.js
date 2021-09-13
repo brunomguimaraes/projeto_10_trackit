@@ -1,18 +1,18 @@
 import React, { useState } from "react";
-import "./css/reset.css";
-import "./css/style.css";
+import "./reset.css";
 import {
     BrowserRouter,
     Route,
     Switch
 } from "react-router-dom";
-import Login from "./Components/Login";
-import Registration from "./Components/Registration";
-import Habits from "./Components/Habits";
-import Today from "./Components/Today";
-import History from "./Components/History";
-import UserContext from './Components/UserContext';
-import DoneHabitsContext from "./Components/DoneHabitsContext"
+import Login from "./Components/LoginAndRegistration/Login";
+import Registration from "./Components/LoginAndRegistration/Registration";
+import Habits from "./Components/Habits-page/Habits";
+import Today from "./Components/Today-page/Today";
+import History from "./Components/History-page/History";
+import UserContext from './Contexts/UserContext';
+import DoneHabitsContext from "./Contexts/DoneHabitsContext"
+import GlobalStyle from "./GlobalStyled";
 
 export default function App () {
 
@@ -28,6 +28,7 @@ export default function App () {
 
     return (
         <>
+          <GlobalStyle />
             <BrowserRouter>
                 <Switch>
                     <Route exact path="/" >
