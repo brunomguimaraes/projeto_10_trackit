@@ -4,11 +4,12 @@ import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { useContext } from 'react';
 import UserContext from './UserContext';
+import DoneHabitsContext from "./DoneHabitsContext";
 
 export default function HeaderFooter () {
 
-    const percentage = 66;
     const loginInfo = useContext(UserContext);
+    const percentage = useContext(DoneHabitsContext);
 
     return (
         <>

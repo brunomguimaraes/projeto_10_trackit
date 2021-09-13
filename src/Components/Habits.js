@@ -15,7 +15,7 @@ export default function Habits () {
     const [newHabitDays, setNewHabitDays] = useState([]);
     const [clicked, setClicked] = useState(false);
     const [loading, setLoading] = useState(false);
-    const weekdays = ["S", "T", "Q", "Q", "S", "S", "D"];
+    const weekdays = ["D", "S", "T", "Q", "Q", "S", "S"];
     const config = {
         headers: {
             Authorization: `Bearer ${loginInfo.token}`
@@ -26,7 +26,6 @@ export default function Habits () {
 
         getHabits(config).then(res => {
             setHabits(res.data);
-            console.log(res.data);
         })
 
     },[])
@@ -36,6 +35,7 @@ export default function Habits () {
             name: newHabitName,
             days: newHabitDays
         }
+
         sendNewHabit(body, config).then(res => {
             setLoading(false);
             setHabits([...habits, res.data])
@@ -71,7 +71,6 @@ export default function Habits () {
                     habit.id !== habitId    
                 )
                 setHabits(removedHabitList);
-                console.log(res.data)
             })
         }
     }
@@ -96,7 +95,7 @@ export default function Habits () {
                                 <HabitNameInput placeholder="nome do hábito" value={newHabitName} onChange={e => setNewHabitName(e.target.value)} loading={loading}/>
                                 <WeekDays loading={loading}>
                                     {weekdays.map((weekday, i) =>                                     
-                                        <WeekDay id={i+1} onClick={e => toggleNewDay(e)} className={newHabitDays.includes(i+1) ? "selected" : ""}>{weekday}</WeekDay>
+                                        <WeekDay id={i} onClick={e => toggleNewDay(e)} className={newHabitDays.includes(i) ? "selected" : ""}>{weekday}</WeekDay>
                                     )}
                                 </WeekDays>
                                 <CancelSaveButtons loading={loading}>
@@ -115,7 +114,7 @@ export default function Habits () {
 
                     {habits.length !== 0 ? (    
                         <HabitCardsList>
-                        {habits.map((habit, i) => 
+                            {habits.map((habit, i) => 
                             <HabitCard id={habit.id} key={i}>
                                 <HabitNameAndTrashBinBox>
                                     <HabitName>{habit.name}</HabitName>
@@ -123,7 +122,7 @@ export default function Habits () {
                                 </HabitNameAndTrashBinBox>
                                 <WeekDays>
                                     {weekdays.map((weekday, i) => 
-                                        <WeekDay id={i+1} className={habit.days.includes(i+1) ? "selected" : ""}>{weekday}</WeekDay>
+                                        <WeekDay id={i} className={habit.days.includes(i) ? "selected" : ""}>{weekday}</WeekDay>
                                     )}
                                 </WeekDays>
                             </HabitCard>)}

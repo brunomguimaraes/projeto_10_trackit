@@ -12,6 +12,7 @@ import Habits from "./Components/Habits";
 import Today from "./Components/Today";
 import History from "./Components/History";
 import UserContext from './Components/UserContext';
+import DoneHabitsContext from "./Components/DoneHabitsContext"
 
 export default function App () {
 
@@ -21,7 +22,11 @@ export default function App () {
     setLoginInfo(userInfo);
   }
 
-  console.log(loginInfo);
+  const [percentage, setPercentage] = useState(0);
+
+  const getPercentage = (value) => {
+    setPercentage(value);
+  }
 
     return (
         <>
@@ -37,18 +42,22 @@ export default function App () {
                     </Route>
 
                   <UserContext.Provider value={loginInfo}>
+                  <DoneHabitsContext.Provider value={percentage}>
 
                     <Route exact path="/habits">
                       <Habits />
                     </Route>
                     <Route exact path="/today">
-                      <Today />
+                      <Today getPercentage={getPercentage}/>
                     </Route>
                     <Route exact path="/history">
                       <History />
                     </Route>
 
+                  </DoneHabitsContext.Provider>
                   </UserContext.Provider>
+
+                  
 
                 </Switch>
 
