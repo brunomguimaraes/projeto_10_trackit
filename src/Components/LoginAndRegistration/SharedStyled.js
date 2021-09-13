@@ -55,7 +55,6 @@ const MainButton = styled.button`
     pointer-events: ${props => props.loading ? "none" : "auto"};
     opacity: ${props => props.loading ? "0.5" : "1"};
 `
-
 export {
     InicializationContainer,
     TrackItLogo,

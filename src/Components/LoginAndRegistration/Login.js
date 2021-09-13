@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { sendLogin } from "../../API";
 import { useHistory } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Loader from "react-loader-spinner";
 import {InicializationContainer,
     TrackItLogo,

@@ -12,6 +12,8 @@ export default function Today ({ getPercentage }) {
 
     const loginInfo = useContext(UserContext);
     const [todayHabits, setTodayHabits] = useState(null);
+    let concludedLength;
+    let percentage;
     const config = {
         headers: {
             Authorization: `Bearer ${loginInfo.token}`
@@ -41,9 +43,12 @@ export default function Today ({ getPercentage }) {
         )
     }
 
-    const concludedLength = [...todayHabits].filter(habit => habit.done === true).length;
-    const percentage = ((concludedLength/todayHabits.length)*100).toFixed(0);
-    getPercentage(percentage);
+    const calculateHabitsDonePercentage = () => {
+        concludedLength = [...todayHabits].filter(habit => habit.done === true).length;
+        percentage = ((concludedLength/todayHabits.length)*100).toFixed(0);
+        getPercentage(percentage);
+    }
+    calculateHabitsDonePercentage();
 
     const toggleCheck = (todayHabit) => {
         if (todayHabit.done) {
