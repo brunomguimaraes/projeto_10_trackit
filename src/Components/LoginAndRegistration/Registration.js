@@ -19,21 +19,24 @@ export default function Login () {
     const [loading, setLoading] = useState(false);
 
     const register = () => {
+        if (password.length < 6) {
+            alert("Sua senha é muito fraca!");
+            return;
+        }
         const body = {
             email,
             name,
             image,
             password
         }
-        sendRegistration(body)
-        .then(res => {
+        sendRegistration(body).then(res => {
             history.push("/")
         }).catch(err => {
             setLoading(false);
             if (err.response.status === 409) {
                 alert("Já existe um usuário cadastrado com essas informações!");
             } else {
-                alert("Seu registro não foi efetuado! Por favor, tente novamente.")
+                alert("Seu registro não foi efetuado! Por favor, altere os campos e tente novamente.")
             }
         })
         setLoading(true);

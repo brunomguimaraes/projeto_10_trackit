@@ -21,13 +21,12 @@ export default function Login ({ getUserInfo }) {
             email,
             password
         }
-        sendLogin(body)
-        .then(res => {
+        sendLogin(body).then(res => {
             getUserInfo(res.data);
             history.push("/today");            
         }).catch(err => {
             setLoading(false);
-            alert("Seu login não foi efetuado! Por favor, tente novamente.")
+            alert("Seu login não foi efetuado! Por favor, altere os campos e tente novamente.")
         })
         setLoading(true);
     }

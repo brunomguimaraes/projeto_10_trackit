@@ -42,6 +42,16 @@ export default function Habits () {
     }
 
     const createNewHabit = () => {
+        if (newHabitName === "") {
+            alert("Por favor, insira o título de seu hábito.");
+            return;
+        } else if (newHabitName.replace(/\s/g, '').length === 0) {
+            alert("O título de seu hábito não deve conter apenas espaços vazios!");
+            return;
+        } else if (newHabitDays.length === 0) {
+            alert("Por favor, defina pelo menos 1 dia para seu hábito.");
+            return;
+        }
         const body = {
             name: newHabitName,
             days: newHabitDays
@@ -56,7 +66,7 @@ export default function Habits () {
             setLoading(false);
             setNewHabitName("");
             setNewHabitDays([]);
-            alert("Não foi possível criar o hábito!");
+            alert("Não foi possível criar o hábito! Por favor, altere os campos e tente novamente.");
         })
         setLoading(true);
     }
