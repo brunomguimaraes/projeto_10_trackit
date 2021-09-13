@@ -1,11 +1,9 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 import HeaderFooter from "./HeaderFooter";
 import { IoCheckmarkSharp } from "react-icons/io5"
 import { getTodayHabits, sendHabitDone, sendHabitUndone } from "../API";
 import UserContext from './UserContext';
 import { useEffect, useContext, useState } from "react";
-
 import dayjs from "dayjs";
 
 export default function Today ({ getPercentage }) {
@@ -14,7 +12,6 @@ export default function Today ({ getPercentage }) {
     let weekday = String(today).split(" ")[0] ;
     let month = String(today).split(" ")[1] ;
     let day = String(today).split(" ")[2] ;
-
     const loginInfo = useContext(UserContext);
     const [todayHabits, setTodayHabits] = useState([]);
     const config = {
@@ -22,32 +19,18 @@ export default function Today ({ getPercentage }) {
             Authorization: `Bearer ${loginInfo.token}`
         }
     }
-
     const concludedLength = [...todayHabits].filter(habit => habit.done === true).length;
     const percentage = ((concludedLength/todayHabits.length)*100).toFixed(0);
-
     getPercentage(percentage);
 
     useEffect(() => {
-
         renderizeTodayHabits();
-
     },[])
-    
-    // const calculateConcludedPercentage = () => {
-    //     const doneList = [...todayHabits].filter(habit => habit.done === true);
-    //     if (doneList.length === 0) {
-    //         setConcludedPercentage(0);
-    //     } else {
-    //         setConcludedPercentage((doneList.length / todayHabits.length)*100)
-    //     }
-    // }
 
     const renderizeTodayHabits = () => {
         getTodayHabits(config).then(res => {
             setTodayHabits(res.data);
         })
-
     }
 
     const toggleCheck = (todayHabit) => {
@@ -60,34 +43,9 @@ export default function Today ({ getPercentage }) {
                 renderizeTodayHabits();
             })
         }
-
     }
 
-    console.log(todayHabits);
-
-    
-    // const toggleCheck = (e) => {
-    //     if (Number(e.target.id) === 0) {
-    //         return;
-    //     }
-    //     if (habitsDone.includes(Number(e.target.id))) {
-    //         sendHabitUndone(e.target.id, config).then(res => {
-    //             const removedIdlist = habitsDone.filter(habitId => 
-    //                 habitId !== Number(e.target.id)
-    //             )
-    //             setHabitsDone(removedIdlist);
-    //         })
-            
-    //     } else {
-    //         sendHabitDone(e.target.id, config).then(res => {
-    //             setHabitsDone([...habitsDone, Number(e.target.id)])
-    //         })
-    //     }
-    // }
-
-
     return (
-
         <>
             <HeaderFooter />
             <main>            
@@ -97,10 +55,9 @@ export default function Today ({ getPercentage }) {
                     </WeekDay>
 
                     <HabitsConcludedQty>
-                        {percentage === 0 ? "Nenhum hábito concluído ainda" : `${percentage}% dos hábitos concluídos`}
+                        {percentage === "0" ? "Nenhum hábito concluído ainda" : percentage === "100" ? "Parabéns! Você concluiu todos os seus hábitos de hoje" : `${percentage}% dos hábitos concluídos`}
                     </HabitsConcludedQty>
                 </div>
-
                 {todayHabits.length !== 0 ? (
                     <TodayCardsList>
                         {todayHabits.map((todayHabit, i) => 
@@ -119,11 +76,9 @@ export default function Today ({ getPercentage }) {
                         </TodayCard>)}
                     </TodayCardsList>
                 ) : (<></>)}
-        
             </main>
         </>
     )
-
 }
 
 const WeekDay = styled.h1`

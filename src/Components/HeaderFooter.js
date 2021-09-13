@@ -18,7 +18,6 @@ export default function HeaderFooter () {
                 <UserName>{loginInfo.name}</UserName>
                 <ProfilePictureContainer loginInfo={loginInfo}/>
             </Navbar>
-
             <BottomBar>
                 <Link to="/habits" className="to-habits-history-link">Hábitos</Link>
                 <Link to="/today">

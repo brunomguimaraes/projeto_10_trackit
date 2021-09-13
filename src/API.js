@@ -10,7 +10,6 @@ const getTodayHabits = (config) => axios.get(`${URL}/habits/today`, config);
 const sendHabitDone = (habitId, config) => axios.post(`${URL}/habits/${habitId}/check`, {}, config);
 const sendHabitUndone = (habitId, config) => axios.post(`${URL}/habits/${habitId}/uncheck`, {}, config);
 
-
 export {
     sendRegistration,
     sendLogin,

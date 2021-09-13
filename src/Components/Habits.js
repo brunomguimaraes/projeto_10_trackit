@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 import HeaderFooter from "./HeaderFooter";
 import { IoTrashOutline } from "react-icons/io5"
 import { useEffect, useContext, useState } from "react";
@@ -23,11 +22,9 @@ export default function Habits () {
     }
 
     useEffect(() => {
-
         getHabits(config).then(res => {
             setHabits(res.data);
         })
-
     },[])
 
     const createNewHabit = () => {
@@ -35,7 +32,6 @@ export default function Habits () {
             name: newHabitName,
             days: newHabitDays
         }
-
         sendNewHabit(body, config).then(res => {
             setLoading(false);
             setHabits([...habits, res.data])
@@ -48,7 +44,6 @@ export default function Habits () {
             setNewHabitDays([]);
             alert("Não foi possível criar o hábito!");
         })
-
         setLoading(true);
     }
 
@@ -75,7 +70,6 @@ export default function Habits () {
         }
     }
 
-
     return (
         <>
             <HeaderFooter />
@@ -88,7 +82,6 @@ export default function Habits () {
                         +
                     </AddHabitButton>
                 </TopBoxTitle>
-
                     {habits.length === 0 || clicked ? (
                         <>
                             <AddHabitCard loading={loading}>
@@ -105,13 +98,11 @@ export default function Habits () {
                             </AddHabitCard>
                         </>
                     ) : (<></>)}
-
                     {habits.length === 0 ? (
                             <NotAHabitYet>
                                 Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!
                             </NotAHabitYet>
                     ) : (<></>)}
-
                     {habits.length !== 0 ? (    
                         <HabitCardsList>
                             {habits.map((habit, i) => 
@@ -128,7 +119,6 @@ export default function Habits () {
                             </HabitCard>)}
                         </HabitCardsList>
                     ) : (<></>)}
-                
             </main>
         </>
     )
