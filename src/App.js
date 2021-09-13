@@ -18,7 +18,7 @@ export default function App () {
 
   const [loginInfo, setLoginInfo] = useState(null);
   const [percentage, setPercentage] = useState(0);
-
+  
   const getUserInfo = (userInfo) => {
     setLoginInfo(userInfo);
   }

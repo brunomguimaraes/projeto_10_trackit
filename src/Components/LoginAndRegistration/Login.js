@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { sendLogin } from "../../API";
 import { useHistory } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Loader from "react-loader-spinner";
 import {InicializationContainer,
     TrackItLogo,
@@ -15,6 +15,20 @@ export default function Login ({ getUserInfo }) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
+    
+    const isUserLoginInfoSaved = () => {
+        const directLoginOrNot = window.confirm("Você deseja logar diretamente com a conta anterior?");
+        if (directLoginOrNot) {
+            if (localStorage.getItem("userTrackItLogin") !== null) {
+                const userTrackItLogin = localStorage.getItem("userTrackItLogin");
+                getUserInfo(JSON.parse(userTrackItLogin));
+                history.push("/today");
+              } else {
+                  alert("Você não possui nenhuma conta salva!");
+              }
+        }
+    }
+    window.onload = isUserLoginInfoSaved;
 
     const login = () => {
         const body = {
@@ -23,6 +37,7 @@ export default function Login ({ getUserInfo }) {
         }
         sendLogin(body).then(res => {
             getUserInfo(res.data);
+            localStorage.setItem("userTrackItLogin", JSON.stringify(res.data));
             history.push("/today");            
         }).catch(err => {
             setLoading(false);

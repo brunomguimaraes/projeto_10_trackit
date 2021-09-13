@@ -3,16 +3,13 @@ import { IoCheckmarkSharp } from "react-icons/io5"
 import { getTodayHabits, sendHabitDone, sendHabitUndone } from "../../API";
 import UserContext from '../../Contexts/UserContext';
 import { useEffect, useContext, useState } from "react";
-import dayjs from "dayjs";
+import * as dayjs from 'dayjs';
+import 'dayjs/locale/pt-br';
 import Loading from "../Loading";
 import { WeekDay, HabitsConcludedQty, TodayCardsList, TodayCard, TodayTaskContent, Task, Sequence, Record, CheckButton } from "./TodayStyled"
 
 export default function Today ({ getPercentage }) {
 
-    let today = dayjs().$d;
-    let weekday = String(today).split(" ")[0] ;
-    let month = String(today).split(" ")[1] ;
-    let day = String(today).split(" ")[2] ;
     const loginInfo = useContext(UserContext);
     const [todayHabits, setTodayHabits] = useState(null);
     const config = {
@@ -21,10 +18,6 @@ export default function Today ({ getPercentage }) {
         }
     }
 
-    useEffect(() => {
-        renderizeTodayHabits();
-    },[])
-
     const renderizeTodayHabits = () => {
         getTodayHabits(config).then(res => {
             setTodayHabits(res.data);
@@ -32,6 +25,10 @@ export default function Today ({ getPercentage }) {
             alert("Não foi possível carregar os hábitos de hoje do servidor!");
         })
     }
+
+    useEffect(() => {
+        renderizeTodayHabits();
+    },[])
 
     if (todayHabits === null) {
         return (
@@ -66,7 +63,7 @@ export default function Today ({ getPercentage }) {
             <main>            
                 <div>
                     <WeekDay>
-                        {weekday}, {day}/{month}
+                        {dayjs().locale('pt-br').format(`dddd, DD/MM`)}
                     </WeekDay>
 
                     <HabitsConcludedQty>
