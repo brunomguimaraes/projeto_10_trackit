@@ -58,10 +58,17 @@ export const CheckButton = styled.button`
     height: 69px;
     border-radius: 5px;
     border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     .check-mark {
-        font-size: 50px;
+        font-size: 60px;
         color: #ffffff;
         font-weight: bold;
+        
+        :active {
+	        transform:  translateY(5px);
+        }
     }
 `

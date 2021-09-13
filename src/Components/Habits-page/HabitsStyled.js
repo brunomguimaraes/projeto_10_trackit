@@ -18,6 +18,10 @@ export const AddHabitButton = styled.button`
     font-size: 27px;
     color: #ffffff;
     font-weight: bold;
+
+    :active {
+	    transform:  translateY(5px);
+    }
 `
 export const AddHabitCard = styled.div`
     height: 180px;
@@ -80,6 +84,10 @@ export const CancelButton = styled.button`
     font-size: 16px;
     color: #52B6FF;
     margin-right: 16px;
+
+    :active {
+	    transform:  translateY(5px);
+    }
 `
 export const SaveButton = styled.button`
     background-color: #52B6FF;
@@ -92,6 +100,10 @@ export const SaveButton = styled.button`
     display: flex;
     justify-content: center;
     align-items: center;
+    
+    :active {
+	    transform:  translateY(5px);
+    }
 `
 export const HabitCardsList = styled.ul`
     display: flex;
@@ -113,6 +125,10 @@ export const HabitNameAndTrashBinBox = styled.div`
     .trash-bin {
         font-size: 20px;
         color: #666666;
+
+        :active {
+	        transform:  translateY(5px);
+        }
     }
 `
 export const HabitName = styled.h1`
